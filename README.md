@@ -17,6 +17,13 @@
 Because it comes bundled with all of Vercengen's modules/components, as well as other data editors from other Confoederatio projects, it has been split off from Vercengen to cut down on code size in the main repository. Unitel versions are numbered sequentially for the given year (i.e. 2026.xx).
 
 <div align = "center">
+	<img src = "https://i.postimg.cc/Vs43PJ1g/unitel-26-01.png">
+	Unitel 2026.01
+</div><br>
+
+Unitel instances may undergo rapid iteration, and so we recommend downloading it from the source repository as opposed to the more generic **Releases** page.
+
+<div align = "center">
 <br>
 <img src = "https://i.postimg.cc/HxNQXRvc/ctd-coat-of-arms-logo.png" height = "64">
 </div>
