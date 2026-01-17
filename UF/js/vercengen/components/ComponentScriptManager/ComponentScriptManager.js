@@ -338,7 +338,7 @@ ve.ScriptManager = class extends ve.Component {
 					//ScriptManager .name
 					`<span id = "name">${this.name}</span>`,
 					//Project Header
-					`${(!options.do_not_display_project_name) ? `<div id = "project-name"><b>${(this.config.project_folder !== "none") ? this.config.project_folder : loc("ve.registry.localisation.ScriptManager_no_project")}</b></div>` : ""}`,
+					`${(!options.do_not_display_project_name) ? `<div id = "project-name"><b>${(this.config.project_folder && this.config.project_folder !== "none") ? this.config.project_folder : loc("ve.registry.localisation.ScriptManager_no_project")}</b></div>` : ""}`,
 					//File Header
 					`${(!options.do_not_display_file_name) ? `- <span id = "file-name" data-is-saved="${this._is_file_saved}">${(this._file_path) ? this._file_path : loc("ve.registry.localisation.ScriptManager_none")}</span>` : ""}`
 				].join("");
