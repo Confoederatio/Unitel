@@ -11,6 +11,7 @@
  * - `arg0_value`: {@link string} - The code to load into the present ve.ScriptManager.
  * - `arg1_options`: {@link Object}
  *   - `.do_not_auto_detect_project=false`: {@link boolean} - Whether to attempt to read from the base `.ve-sm` file upon initialisation.
+ *   - `.do_not_cache_file_explorer=false`: {@link boolean} - Whether the file directory should remain the same as when last opened.
  *   - `.do_not_display_file_name=false`: {@link boolean}
  *   - `.do_not_display_project_name=false`: {@link boolean}
  *   - `.folder_path=process.cwd()`: {@link string}
@@ -176,9 +177,7 @@ ve.ScriptManager = class extends ve.Component {
 						limit: () => is_file,
 						selected: (local_file_obj.type) ? local_file_obj.type : default_file_extension,
 						
-						onuserchange: (v) => {
-							ve.ScriptManager._setFileExtension.call(this, local_file_path, v);
-						}
+						onuserchange: (v) => ve.ScriptManager._setFileExtension.call(this, local_file_path, v)
 					}),
 					mark_source_as_excluded: new ve.Button(() => {
 						ve.ScriptManager._setSourceAsMode.call(this, local_file_path, "excluded");
@@ -218,6 +217,7 @@ ve.ScriptManager = class extends ve.Component {
 					
 					this._settings.project_folder = new_folder_path;
 					ve.ScriptManager._indexDocumentation.call(this, this.bottombar_status_el);
+          this.saveSettings();
 					veToast(`Changed project folder to ${new_folder_path}`);
 				}, { 
 					name: "<icon>gite</icon>",
@@ -248,7 +248,11 @@ ve.ScriptManager = class extends ve.Component {
 				return this.scene_monaco.v;
 			},
 			
-			onrefresh: (v, e) => ve.ScriptManager._drawFileExplorer.call(this, v, e)
+			onrefresh: (v, e) => ve.ScriptManager._drawFileExplorer.call(this, v, e),
+      onuserchange: (v) => {
+        this.config._leftbar_file_explorer_path = v;
+        ve.ScriptManager._saveConfig.call(this);
+      }
 		});
 		this.leftbar_file_explorer.bind(this.leftbar_el);
 		this.scene_el = document.createElement("div");

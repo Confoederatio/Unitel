@@ -47,12 +47,17 @@
 						this.config.ui_bottombar_value.splice(i, 1);
 				this.bottombar_obj.v = this.config.ui_bottombar_value;
 			}
+
+      //Attempt to load the starting folder if possible
+      if (!this.options.do_not_cache_file_explorer && this.config._leftbar_file_explorer_path)
+        if (fs.existsSync(this.config._leftbar_file_explorer_path))
+          this.leftbar_file_explorer.v = this.config._leftbar_file_explorer_path;
 		}
 	};
 	
 	ve.ScriptManager._saveConfig = function () {
 		if (this._settings.project_folder === "none") return; //Internal guard clause if project folder is not set
-		
+
 		//Initialise config
 		if (this._file_path)
 			this.config._file_path = this._file_path;
