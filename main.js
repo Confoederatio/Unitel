@@ -5,7 +5,7 @@ let { performance } = require("perf_hooks");
 
 //Metadata - Title
 let latest_fps = 0;
-let unitel_version = "26.01";
+let unitel_version = "2026.02";
 let title_update_interval;
 let win;
 
