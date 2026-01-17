@@ -21,11 +21,19 @@
 		}
 	};
 	
-	ve.ScriptManager._loadConfig = function () {
-		if (this._settings.project_folder === "none") return; //Internal guard clause if project folder is not set
+	ve.ScriptManager._loadConfig = function (arg0_vesm_folder) {
+    //Convert from parameters
+    let vesm_folder = (arg0_vesm_folder) ? arg0_vesm_folder : process.cwd();
+
+    //Try to load the local .ve-sm to determine the actual project path
+		if (fs.existsSync(".ve-sm")) try {
+      console.log(`Reading config from:`, path.join(vesm_folder, ".ve-sm"));
+			this.config = JSON.parse(fs.readFileSync(path.join(vesm_folder, ".ve-sm"), "utf8"));
+    } catch (e) { console.error(e); }
+		if (this.config.project_folder === "none" || !this.config.project_folder) return; //Internal guard clause if project folder is not set
 		
 		//Declare local instance variables
-		let project_folder = this._settings.project_folder;
+		let project_folder = this.config.project_folder;
 		
 		let project_config_path = path.join(project_folder, ".ve-sm");
 		
@@ -56,14 +64,14 @@
 	};
 	
 	ve.ScriptManager._saveConfig = function () {
-		if (this._settings.project_folder === "none") return; //Internal guard clause if project folder is not set
+		if (this.config.project_folder === "none") return; //Internal guard clause if project folder is not set
 
 		//Initialise config
 		if (this._file_path)
 			this.config._file_path = this._file_path;
 		
 		//Declare local instance variables
-		let project_folder = this._settings.project_folder;
+		let project_folder = this.config.project_folder;
 		
 		let project_config_path = path.join(project_folder, ".ve-sm");
 		
